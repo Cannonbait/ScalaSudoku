@@ -1,23 +1,25 @@
-import org.scalacheck.Properties
+import org.scalacheck.Gen.{frequency, oneOf}
+import org.scalacheck.{Arbitrary, Gen, Properties}
 import org.scalacheck.Prop.forAll
-import org.scalacheck.Gen
-import org.scalacheck.Gen.oneOf
+import sudoku.{Cell, Row, Sudoku, printSudoku, isSudoku}
 
-def genCell():
-  Gen.one
 
-object StringSpecification extends Properties("String") {
+object SudokuSpecification extends Properties("sudoku") {
+  val cellGen = for {
+    value <- Gen.oneOf[Option[Int]](Some(1), Some(2), Some(3), Some(4), Some(5), Some(6), Some(7), Some(8), Some(9), None)
+  } yield Cell(value)
 
-  property("startsWith") = forAll { (a: String, b: String) =>
-    (a+b).startsWith(a)
+  val rowGen = for {
+    cells <- Gen.listOfN(9, cellGen)
+  } yield Row(cells)
+
+  val sudokuGen: Gen[Sudoku] = for {
+    rows <- Gen.listOfN(9, rowGen)
+  } yield Sudoku(rows)
+
+  implicit val arbSudoku: Arbitrary[Sudoku] = Arbitrary(sudokuGen)
+
+  property("test") = forAll { (a: Sudoku) =>
+    isSudoku(a)
   }
-
-  property("concatenate") = forAll { (a: String, b: String) =>
-    (a+b).length > a.length && (a+b).length > b.length
-  }
-
-  property("substring") = forAll { (a: String, b: String, c: String) =>
-    (a+b+c).substring(a.length, a.length+b.length) == b
-  }
-
 }

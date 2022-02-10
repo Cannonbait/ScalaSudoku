@@ -1,4 +1,4 @@
-ThisBuild / name := "Sudoku"
+ThisBuild / name := "sudoku.Sudoku"
 
 ThisBuild / version := "0.1"
 
