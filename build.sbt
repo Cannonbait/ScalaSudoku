@@ -1,7 +1,7 @@
-name := "Sudoku"
+ThisBuild / name := "Sudoku"
 
-version := "0.1"
+ThisBuild / version := "0.1"
 
-scalaVersion := "2.13.8"
+ThisBuild / scalaVersion := "3.1.1"
 
-libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.1" % "test"
+ThisBuild / libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.15.4" % "test"
