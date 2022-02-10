@@ -1,5 +1,6 @@
 import scala.io.Source
 
+
 case class Cell(value: Option[Int])
 case class Row(cells: List[Cell])
 case class Sudoku(rows: List[Row])
